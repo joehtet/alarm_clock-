@@ -1,12 +1,21 @@
-# alarm_clock
+# CLI Pomodoro Timer
 
-A command line interface timer that does two things:
+Python script to run a CLI timer that does two things:
 
-1) Set a timer 
-<<<<<<< HEAD
-=======
+## 1) Start a pomodoro timer
 
->>>>>>> 523206fe1a338b3023abcb94f7488bc9766870d1
-2) Start a pomodoro timer
+Pomodoro mode is on by default. Simply run the script:
+```bash
+    python alarm_clock.py 
+      
+```
 
-The alarm sounds are randomly picked from alarm_songs.txt which contains a list of youtube urls.
+
+## 2) Set a countdown timer:
+```bash
+    python alarm_clock.py <--timer|-t> [-h][-m][-s] <HOUR MINUTES SECONDS>
+```
+ex. Setting a timer for 1 hour and 30 minutes:
+```bash
+    python alarm_clock.py t -h 1 -m 30
+```
