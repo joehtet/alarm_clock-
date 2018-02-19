@@ -18,3 +18,6 @@ ex. Setting a timer for 1 hour and 30 minutes:
 ```bash
 python alarm_clock.py t -h 1 -m 30
 ```
+
+## Dependencies
+pygame 
