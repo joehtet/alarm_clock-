@@ -68,10 +68,10 @@ parser.add_argument('-s', '--seconds', nargs='?', default=0, type=int)
 
 args = parser.parse_args()
 
-if args.pomodoro:
-    pomodoro()
-elif args.timer:
+
+if args.timer:
     set_alarm(to_seconds( args.hours, args.minutes, args.seconds))
 else:
-    print("No inputs, please choose -t or -p")
+    pomodoro()
+    
 
