@@ -25,7 +25,7 @@ def set_alarm(time_in_seconds):
         print("Please enter a time")
         return
 
-    print("Alarm will ring in %s seconds" % time_in_seconds)
+    print("Alarm will ring in %s seconds. Press Ctrl+C to quit." % time_in_seconds)
     time.sleep(time_in_seconds)
     play_sound()
     print("Alarm rang. Exiting now.")
@@ -34,7 +34,7 @@ def set_alarm(time_in_seconds):
 # pomodoro timer
 def pomodoro():
 
-    print("Pomodoro timer started, break time in 25 minutes.")
+    print("Pomodoro timer started, break time in 25 minutes. Press Ctrl+C to quit.")
 
     while(True):
         time.sleep(25*60)
@@ -68,10 +68,12 @@ parser.add_argument('-s', '--seconds', nargs='?', default=0, type=int)
 
 args = parser.parse_args()
 
-
-if args.timer:
-    set_alarm(to_seconds( args.hours, args.minutes, args.seconds))
-else:
-    pomodoro()
+try:
+    if args.timer:
+        set_alarm(to_seconds( args.hours, args.minutes, args.seconds))
+    else:
+        pomodoro()
+except KeyboardInterrupt:
+    print("Goodbye")
     
 
