@@ -5,12 +5,7 @@ from util import Util
 
 class Clock():
 
-    def __init__(self):
-        self.keyPressed = False 
-
-
-# Countdown Timer
-
+#Countdown Timer
     def set_alarm(self,time_in_seconds):
         if(time_in_seconds==0):
             print("Please enter a time")
@@ -22,7 +17,21 @@ class Clock():
         print("Alarm rang. Exiting now.")
 
 
-# Pomodoro Timer
+#Pomodoro Timer
+#       The Pomodoro technique is:
+#           1) (Work - 25 mins, Rest - 5 mins)
+#           2) Repeat last step 3 times
+#           3) (Work - 25 mins, Rest - 15 mins)
+#           4) Repeat 1-3
+
+    def set_pomodoro(self):
+
+        while(True):
+            for i in range(0,2):
+                self._run(25)
+                self._run(5)
+            self._run(25)
+            self._run(15)
 
     def _run(self, time_type):
         print("\nPress Ctrl+C to quit\n")
@@ -36,17 +45,7 @@ class Clock():
                 print("\rYou've earned a long break time! Come back to work in %i minutes :)" % i, end="\r", flush=True)
 
             # sleep for 1 min
-            time.sleep(0.5)
+            time.sleep(60)
 
         Util.play_sound()
-
-
-    def set_pomodoro(self):
-
-        while(not self.keyPressed):
-            for i in range(0,2):
-                self._run(25)
-                self._run(5)
-            self._run(25)
-            self._run(15)
 

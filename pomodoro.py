@@ -31,7 +31,7 @@ try:
         clk.set_pomodoro()
 
 except KeyboardInterrupt:
-    print("\nGoodbye")
+    print("\n\nGoodbye")
     
 
 
