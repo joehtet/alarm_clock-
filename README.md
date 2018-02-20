@@ -20,4 +20,4 @@ python alarm_clock.py t -h 1 -m 30
 ```
 
 ## Dependencies
-[pygame](https://pygame.org/wiki/GettingStarted)
+..* [pygame](https://pygame.org/wiki/GettingStarted)
