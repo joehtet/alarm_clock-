@@ -1,9 +1,8 @@
-import random
-import argparse
-import pygame
 import time
+import pygame
+import argparse
 
-# play the alarm sound. reinitialize and quit mixer to stop CPU activity while idle
+# play the alarm sound. quit mixer to stop CPU activity while idle
 def play_sound():
     pygame.mixer.init()
 
@@ -11,7 +10,7 @@ def play_sound():
     pygame.mixer.music.play()
 
     #pauses program so the sound can finish playing before pygame.mixer.quit() executes
-    time.sleep(.7)
+    time.sleep(1)
 
     pygame.mixer.quit()
 
@@ -30,22 +29,34 @@ def set_alarm(time_in_seconds):
     play_sound()
     print("Alarm rang. Exiting now.")
 
+def run(time_type):
+    print("\nPress Ctrl+C to quit\n")
+
+    for i in range(time_type,0,-1):
+        if(time_type==25):
+            print("Pomodoro timer started, break time in %i minutes." % i, end="\r", flush=True)
+        elif(time_type==5):
+            print("\rBreak time! Come back to work in %i minutes :)" % i, end="\r", flush=True)
+        else:
+            print("\rYou've earned a long break time! Come back to work in %i minutes :)" % i, end="\r", flush=True)
+
+        # sleep for 1 min
+        time.sleep(60)
+
+    play_sound()
+
 
 # pomodoro timer
 def pomodoro():
+    keyPressed = False
 
-    print("Pomodoro timer started, break time in 25 minutes. Press Ctrl+C to quit.")
-
-    while(True):
-        time.sleep(25*60)
-
-        play_sound()
-        print("Break time! Come back to work in 5 minutes :)")
-
-        time.sleep(5*60)
-
-        play_sound()
-        print("Back to work! You have 25 minutes left")
+    while(not keyPressed):
+        for i in range(0,2):
+            run(25)
+            run(5)
+        run(25)
+        run(15)
+       
     
 
 # cmd line functionality
@@ -73,7 +84,8 @@ try:
         set_alarm(to_seconds( args.hours, args.minutes, args.seconds))
     else:
         pomodoro()
+
 except KeyboardInterrupt:
-    print("Goodbye")
+    print("\nGoodbye")
     
 
