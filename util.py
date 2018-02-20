@@ -1,3 +1,4 @@
+import os
 import time
 from pygame import mixer
 
@@ -7,7 +8,7 @@ class Util:
 
         mixer.init()
 
-        mixer.music.load("sound.wav")
+        mixer.music.load(os.path.join(os.getcwd(), "sound.wav"))
         mixer.music.play()
 
         #pauses program so the sound can finish playing before pygame.mixer.quit() executes
