@@ -19,5 +19,11 @@ ex. Setting a timer for 1 hour and 30 minutes:
 python pomodoro.py t -h 1 -m 30
 ```
 
+## Installation for Linux systems
+
+Run this command: 
+```bash
+sudo python3 install.py
+```
 ## Dependencies
 * [pygame](https://pygame.org/wiki/GettingStarted)
