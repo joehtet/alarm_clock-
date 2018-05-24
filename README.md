@@ -4,9 +4,9 @@ Python script to run a CLI timer that does two things:
 
 ## 1) Start a pomodoro timer
 
-Pomodoro mode is on by default. Simply run the script:
+Pomodoro mode is on by default. Simply call the command:
 ```bash
-python pomodoro.py
+pomodoro
 ```
 
 
