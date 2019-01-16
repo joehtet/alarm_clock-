@@ -2,22 +2,28 @@ from clock import Clock
 from util import Util 
 import argparse
 
-# Commandline Functionality
+# Command line Functionality
 
 # gets user inputted time from cmd line
 parser = argparse.ArgumentParser(description='Set the alarm clock or start pomodoro timer.')
-
 group = parser.add_mutually_exclusive_group()
 
-group.add_argument('-p', '--pomodoro', action='store_true', default=False,
-                    dest='pomodoro', help='start the pomodoro timer (25 minutes of work, 5 minutes break time)')
+help_message = 'start the pomodoro timer (25 minutes of work, 5 minutes break time)'
 
-group.add_argument('-t', '--timer' , action='store_true', default=False, dest='timer', help='start the timer, -hr <HOUR> -m <MINUTES> -s <SECONDS>')
+group.add_argument('-p', '--pomodoro', 
+                   action = 'store_true', 
+                   default = False,
+                   dest = 'pomodoro', 
+                   help = help_message)
+
+group.add_argument('-t', '--timer' , 
+                   action = 'store_true', 
+                   default = False, 
+                   dest = 'timer', 
+                   help = 'start the timer, -hr <HOUR> -m <MINUTES> -s <SECONDS>')
 
 parser.add_argument('-hr', '--hours', nargs='?', default=0, type=int)
-
 parser.add_argument('-m', '--minutes', nargs='?', default=0, type=int)
-
 parser.add_argument('-s', '--seconds', nargs='?', default=0, type=int)
 
 args = parser.parse_args()

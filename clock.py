@@ -20,7 +20,7 @@ class Clock():
 #Pomodoro Timer
 #       The Pomodoro technique is:
 #           1) (Work - 25 mins, Rest - 5 mins)
-#           2) Repeat last step 3 times
+#           2) Repeat Step 1 two more times
 #           3) (Work - 25 mins, Rest - 15 mins)
 #           4) Repeat 1-3
 

@@ -8,7 +8,9 @@ class Util:
 
         mixer.init()
 
-        mixer.music.load(os.path.join(os.getcwd(), "sound.wav"))
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+
+        mixer.music.load(os.path.join(dir_path, "sound.wav"))
         mixer.music.play()
 
         #pauses program so the sound can finish playing before pygame.mixer.quit() executes
