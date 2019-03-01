@@ -1,9 +1,9 @@
-import subprocess as sp
+import os
 import sys
+import ctypes
+import subprocess as sp
 from getpass import getuser
 from exception import AdminStateUnknownError
-import ctypes
-import os
 
 print("Installing pomodoro timer...")
 
@@ -44,48 +44,48 @@ def is_user_admin():
 # install dependencies
 PIP_VERSION = "pip3" if sys.version[0]==3 else "pip"
 PLATFORM = sys.platform
+
 print("Installing dependencies...")
 
 if "linux" in PLATFORM:
     if get_permissions():
         try:
-            sp.Popen(["sudo", PIP_VERSION, "install", "virtualenv", ])
+            sp.check_call(["sudo", PIP_VERSION, "install", "pygame", ])
         except sp.CalledProcessError:
             print("Please try again.")
-            exit
-if "win" in PLATFORM or "cygwin" in PLATFORM:
+            sys.exit()
+elif "win" in PLATFORM or "cygwin" in PLATFORM:
     if not is_user_admin():
         print("Error. Please run the script as Administrator")
     else:
         print("Installing Virtualenv")
-        sp.call([PIP_VERSION, "install", "virtualenv", ])
+        sp.call([PIP_VERSION, "install", "pygame", ])
 else:
-    print("Sorry. OS not supported")
+    print("Sorry. {} not supported".format(PLATFORM))
+    sys.exit()
 
-
-# TODO: setup virtual env and install pygame
 
 # copy pomodoro shell script to ~/bin
 
 # Write the shell script
-# file = open("pomodoro", 'w')
+file = open("pomodoro", 'w')
+path = os.path.join( os.getcwd(), "pomodoro.py")
+command = "python3 " + path + " $*"
 
-# path = os.path.join( os.getcwd(), "pomodoro.py")
-# command = "python3 " + path
-# file.write("#!/bin/bash\n\n")
-# file.write(command)
+# HAVE TO PASS IN ARGUMENTS FROM BASH SCRIPT TO PYTHON SCRIPT
+# TWO SCRIPTS WILL BE WRITTEN, ONE FOR EACH PLATFORM. THE SCRIPT THAT GETS COPIED DEPENDS ON THE PLATFORM
 
-# file.close()
+file.write("#!/bin/bash\n\n")
+file.write(command)
+file.close()
 
-# os.chmod("pomodoro", 0o755) #leading 0 for linux systems
+os.chmod("pomodoro", 0o755) #leading 0 for linux systems
 
+# Move the script to bin
+try: 
+    print("Installing pomodoro timer...")
+    os.system(r'mv pomodoro ~/bin/pomodoro')
+    print("Success!")
 
-# # Move the script to bin
-# try: 
-#     print("Installing pomodoro timer...")
-#     os.system(r'mv pomodoro ~/bin/pomodoro')
-#     print("Success!")
-
-# except: 
-#     print("Error!")
-
+except: 
+    print("Error!")

@@ -10,18 +10,8 @@ group = parser.add_mutually_exclusive_group()
 
 help_message = 'start the pomodoro timer (25 minutes of work, 5 minutes break time)'
 
-group.add_argument('-p', '--pomodoro', 
-                   action = 'store_true', 
-                   default = False,
-                   dest = 'pomodoro', 
-                   help = help_message)
-
-group.add_argument('-t', '--timer' , 
-                   action = 'store_true', 
-                   default = False, 
-                   dest = 'timer', 
-                   help = 'start the timer, -hr <HOUR> -m <MINUTES> -s <SECONDS>')
-
+group.add_argument('-p', '--pomodoro', action = 'store_true', default = False, dest = 'pomodoro', help = help_message) 
+group.add_argument('-t', '--timer' , action = 'store_true', default = False, dest = 'timer', help = 'start the timer, -hr <HOUR> -m <MINUTES> -s <SECONDS>') 
 parser.add_argument('-hr', '--hours', nargs='?', default=0, type=int)
 parser.add_argument('-m', '--minutes', nargs='?', default=0, type=int)
 parser.add_argument('-s', '--seconds', nargs='?', default=0, type=int)

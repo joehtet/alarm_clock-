@@ -8,7 +8,7 @@ class Clock():
 #Countdown Timer
     def set_alarm(self,time_in_seconds):
         if(time_in_seconds==0):
-            print("Please enter a time")
+            print("Please specify a time")
             return
 
         print("Alarm will ring in %s seconds. Press Ctrl+C to quit." % time_in_seconds)

@@ -25,5 +25,13 @@ Run this command:
 ```bash
 sudo python3 install.py
 ```
+
+## For Windows
+
+Run as Administrator:
+```bash
+python3 install.py
+```
+
 ## Dependencies
 * [pygame](https://pygame.org/wiki/GettingStarted)
