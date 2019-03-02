@@ -5,13 +5,21 @@ import subprocess as sp
 from getpass import getuser
 from exception import AdminStateUnknownError
 
+
+
 print("Installing pomodoro timer...")
 
 # get permissions
 def get_permissions():
-    yes = ['Y', 'y', 'yes']
-    no = ['N', 'n', 'no']
+    """Return True if user gave permission to install dependencies
+    """
+    yes = ['Y', 'y', 'yes', 'YES', 'Yes']
+    no = ['N', 'n', 'no', 'NO', 'No']
     while True:
+        # Fix Python 2.x.
+        try: input = raw_input
+        except NameError: pass
+
         user_input = input("Administrator rights required to install dependencies. Continue? Y/N ")
         if user_input in yes or no:
             break
@@ -19,9 +27,7 @@ def get_permissions():
             print("Please enter Y or N")
 
     if user_input in no:
-        print("Okay. Exiting...")
-        sys.exit()
-
+        return False
     return True
 
 def is_user_admin():
@@ -55,6 +61,9 @@ if "linux" in PLATFORM:
         except sp.CalledProcessError:
             print("Please try again.")
             sys.exit()
+    else:
+        print("Okay. Exiting...")
+        sys.exit()
 elif "win" in PLATFORM or "cygwin" in PLATFORM:
     if not is_user_admin():
         print("Error. Please run the script as Administrator")
@@ -66,8 +75,6 @@ else:
     print("Sorry. {} not supported".format(PLATFORM))
     sys.exit()
 
-
-# copy pomodoro shell script to ~/bin
 
 if "linux" in PLATFORM:
     # Write the shell script
@@ -91,14 +98,14 @@ if "linux" in PLATFORM:
         print("Error!")
 
 else:
-    # Write Batch file
+    # Write Batch file which enables "pomodoro" command to be called
     file = open("pomodoro.bat", 'w')
     path = os.path.join( os.getcwd(), "pomodoro.py")
     command = "start " + PYTHON + " {} %*".format(path)
     file.write(command)
     file.close()
 
-    # Command to add this application's directory to PATH variable via Registry
+    # Write Batch file to add this application's directory to PATH variable via Registry
     file = open("add_to_path.bat", 'w') 
     file.write(r"reg add HKEY_CURRENT_USER\Environment /v PATH /d \"%PATH%;{}\"".format(os.getcwd()))
     file.close()
