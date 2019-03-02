@@ -62,7 +62,7 @@ if "linux" in PLATFORM:
             print("Please try again.")
             sys.exit()
     else:
-        print("Okay. Exiting...")
+        print("Okay. Exiting....")
         sys.exit()
 elif "win" in PLATFORM or "cygwin" in PLATFORM:
     if not is_user_admin():
