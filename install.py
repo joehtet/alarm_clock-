@@ -5,12 +5,16 @@ import subprocess as sp
 from getpass import getuser
 from exception import AdminStateUnknownError
 
+# Fix Python 2.x.
+try: input = raw_input
+except NameError: pass
+
 print("Installing pomodoro timer...")
 
 # get permissions
 def get_permissions():
-    yes = ['Y', 'y', 'yes']
-    no = ['N', 'n', 'no']
+    yes = ['Y', 'y', 'yes', 'YES', 'Yes']
+    no = ['N', 'n', 'no', 'NO', 'No']
     while True:
         user_input = input("Administrator rights required to install dependencies. Continue? Y/N ")
         if user_input in yes or no:
@@ -19,9 +23,7 @@ def get_permissions():
             print("Please enter Y or N")
 
     if user_input in no:
-        print("Okay. Exiting...")
-        sys.exit()
-
+        return False
     return True
 
 def is_user_admin():
@@ -55,6 +57,9 @@ if "linux" in PLATFORM:
         except sp.CalledProcessError:
             print("Please try again.")
             sys.exit()
+    else:
+        print("Okay. Exiting...")
+        sys.exit()
 elif "win" in PLATFORM or "cygwin" in PLATFORM:
     if not is_user_admin():
         print("Error. Please run the script as Administrator")
