@@ -33,5 +33,7 @@ Run as Administrator:
 python3 install.py
 ```
 
+Restart computer (needed for adding pomodoro to PATH variable)
+
 ## Dependencies
 * [pygame](https://pygame.org/wiki/GettingStarted)

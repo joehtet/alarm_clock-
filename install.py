@@ -42,7 +42,8 @@ def is_user_admin():
 
 
 # install dependencies
-PIP_VERSION = "pip3" if sys.version[0]==3 else "pip"
+PIP = "pip3" if sys.version[0]==3 else "pip"
+PYTHON = "python3" if sys.version[0]==3 else "python"
 PLATFORM = sys.platform
 
 print("Installing dependencies...")
@@ -50,16 +51,17 @@ print("Installing dependencies...")
 if "linux" in PLATFORM:
     if get_permissions():
         try:
-            sp.check_call(["sudo", PIP_VERSION, "install", "pygame", ])
+            sp.check_call(["sudo", PIP, "install", "pygame", ])
         except sp.CalledProcessError:
             print("Please try again.")
             sys.exit()
 elif "win" in PLATFORM or "cygwin" in PLATFORM:
     if not is_user_admin():
         print("Error. Please run the script as Administrator")
+        sys.exit()
     else:
-        print("Installing Virtualenv")
-        sp.call([PIP_VERSION, "install", "pygame", ])
+        sp.call([PIP, "install", "pygame", ])
+        print('Success!')
 else:
     print("Sorry. {} not supported".format(PLATFORM))
     sys.exit()
@@ -67,25 +69,43 @@ else:
 
 # copy pomodoro shell script to ~/bin
 
-# Write the shell script
-file = open("pomodoro", 'w')
-path = os.path.join( os.getcwd(), "pomodoro.py")
-command = "python3 " + path + " $*"
+if "linux" in PLATFORM:
+    # Write the shell script
+    file = open("pomodoro", 'w')
+    path = os.path.join( os.getcwd(), "pomodoro.py")
+    command = PYTHON + " " + path + " $*"
 
-# HAVE TO PASS IN ARGUMENTS FROM BASH SCRIPT TO PYTHON SCRIPT
-# TWO SCRIPTS WILL BE WRITTEN, ONE FOR EACH PLATFORM. THE SCRIPT THAT GETS COPIED DEPENDS ON THE PLATFORM
+    file.write("#!/bin/bash\n\n")
+    file.write(command)
+    file.close()
 
-file.write("#!/bin/bash\n\n")
-file.write(command)
-file.close()
+    os.chmod("pomodoro", 0o755) #leading 0 for linux systems
 
-os.chmod("pomodoro", 0o755) #leading 0 for linux systems
+    # Move the script to bin
+    try: 
+        print("Installing pomodoro timer...")
+        os.system(r'mv pomodoro ~/bin/pomodoro')
+        print("Success!")
 
-# Move the script to bin
-try: 
-    print("Installing pomodoro timer...")
-    os.system(r'mv pomodoro ~/bin/pomodoro')
-    print("Success!")
+    except: 
+        print("Error!")
 
-except: 
-    print("Error!")
+else:
+    # Write Batch file
+    file = open("pomodoro.bat", 'w')
+    path = os.path.join( os.getcwd(), "pomodoro.py")
+    command = "start " + PYTHON + " {} %*".format(path)
+    file.write(command)
+    file.close()
+
+    # Command to add this application's directory to PATH variable via Registry
+    file = open("add_to_path.bat", 'w') 
+    file.write(r"reg add HKEY_CURRENT_USER\Environment /v PATH /d \"%PATH%;{}\"".format(os.getcwd()))
+    file.close()
+
+    # Run the above batch file and delete it
+    sp.call(["add_to_path.bat"])
+    os.system("del /f /q add_to_path.bat")
+
+    print("Done! Please restart your computer for the changes to take effect.")
+   
