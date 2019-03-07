@@ -7,6 +7,10 @@ from exception import AdminStateUnknownError
 
 print("Installing pomodoro timer...")
 
+# Fix Python 2.x.
+try: input = raw_input
+except NameError: pass
+
 # get permissions
 def get_permissions():
     """Return True if user gave permission to install dependencies
@@ -14,10 +18,6 @@ def get_permissions():
     yes = ['Y', 'y', 'yes', 'YES', 'Yes']
     no = ['N', 'n', 'no', 'NO', 'No']
     while True:
-        # Fix Python 2.x.
-        try: input = raw_input
-        except NameError: pass
-
         user_input = input("Administrator rights required to install dependencies. Continue? Y/N ")
         if user_input in yes or no:
             break
