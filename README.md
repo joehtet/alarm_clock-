@@ -1,6 +1,6 @@
 # CLI Pomodoro Timer
 
-Python script to run a CLI timer that does two things:
+An application for time management and productivity utilizing the Pomodoro Technique. This program is a simple Python script that runs a timer on the command line. It does two things:
 
 ## 1) Start a pomodoro timer
 
@@ -18,6 +18,8 @@ ex. Setting a timer for 1 hour and 30 minutes:
 ```bash
 python pomodoro.py t -h 1 -m 30
 ```
+
+An alarm will ring when the time is up.
 
 ## Installation for Linux systems
 
